@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website Maintenance</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7fdf0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1em;
+      color: #333;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      width: 26em;
+      color: #555;
+      margin-bottom: 2em;
+    }
+
+    #clock {
+      width: 26em;
+      color: #555;
+      margin-bottom: 2em;
+    }
+
+    .logo {
+      width: 180px;
+      height: auto;
+      margin-bottom: 1.5em;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+  </style>
+</head>
+<body>
+
+  <img src="https://files.catbox.moe/z771u3.png" alt="Logo Lemon" class="logo" />
+
+  <h2>🛑 Maintenance Process<h2>
+  <p>Kami sedang melakukan pembaruan sistem atau sedang menonaktifkan website ini sementara untuk menghindari serangan DDOS</p>
+  <p>Harap kembali setelah beberapa saat</p>
+   <div id="clock">00:00:00</div>
+
+  <script>
+    console.log("Server sedang dalam proses Maintenance .");
+    function updateClock() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const currentTime = `${hours}:${minutes}:${seconds}`;
+  
+  document.getElementById('clock').textContent = currentTime;
+}
+setInterval(updateClock, 1000);
+updateClock();
+  </script>
+
+</body>
+</html>
