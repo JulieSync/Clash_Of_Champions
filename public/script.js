@@ -1,8 +1,12 @@
 document.getElementById('bookForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const isi = document.getElementById('isi').value;
-  const option = document.getElementById('option').value;
+  const profile = document.getElementById('profile').value;
+  const name = document.getElementById('name').value;
+  const highSchool = document.getElementById('highSchool').value;
+  const jurusan = document.getElementById('jurusan').value;
+  const descBronze = document.getElementById('descBronze').value;
+  const descSilver = document.getElementById('descSilver').value;
 
   const loading = document.getElementById('loading');
   const resultImage = document.getElementById('resultImage');
@@ -16,7 +20,7 @@ document.getElementById('bookForm').addEventListener('submit', async (e) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ isi, option })
+      body: JSON.stringify({ profile, name, highSchool, jurusan, descBronze, descSilver })
     });
 
     if (!response.ok) {
