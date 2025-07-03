@@ -110,70 +110,63 @@ module.exports = async (req, res) => {
     });
   }
 
-  const { isi, option } = req.body;
+  const { profile, name, highSchool, jurusan, descBronze, descSilver } = req.body;
 
-  if (!isi) {
-    return res.status(400).json({ message: 'Parameter "isi" wajib diisi.' });
+  if (!profile || !name || !highSchool || !jurusan || !descBronze || !descSilver) {
+    return res.status(400).json({ message: 'Semua parameter wajib diisi.' });
   }
 
-  if (isi.length > 68) {
-    return res.status(400).json({ message: 'Teks tidak boleh lebih dari 68 karakter.' });
+  const imageUrl = profile?.trim();
+  const response = await fetch(imageUrl);
+  if (!response.ok) throw new Error('Gagal mengambil gambar profil.');
+
+  if (name.length > 7) {
+    return res.status(400).json({ message: 'Nama tidak boleh lebih dari 7 karakter.' });
+  }
+
+  if (highSchool.length > 5) {
+    return res.status(400).json({ message: 'Nama sekolah tidak boleh lebih dari 9 karakter.' });
+  }
+
+  if (jurusan.length > 20) {
+    return res.status(400).json({ message: 'Jurusan tidak boleh lebih dari 20 karakter.' });
+  }
+
+  if (descBronze.length > 100) {
+    return res.status(400).json({ message: 'Deskripsi Bronze tidak boleh lebih dari 100 karakter.' });
+  }
+
+  if (descSilver.length > 100) {
+    return res.status(400).json({ message: 'Deskripsi Silver tidak boleh lebih dari 100 karakter.' });
   }
 
   try {
-    let canvas, ctx, centerX, bg, maxTextWidth, startY, lineHeight;
+    const img = await Canvas.loadImage(path.join(__dirname, '../media/image/template.jpg'));
+    const canvas = Canvas.createCanvas(800, 600);
+    const ctx = canvas.getContext('2d');
 
-    if (option === "type1") {
-      canvas = Canvas.createCanvas(554, 554);
-      ctx = canvas.getContext('2d');
-      centerX = canvas.width / 2;
-      bg = await Canvas.loadImage(path.join(__dirname, '../media/image/pak_ustad.jpg'));
-      ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#000000';
-      ctx.font = `bold 30px 'default'`;
-      maxTextWidth = 405;
-      startY = 120;
-      lineHeight = 35;
-    } else if (option === "type2") {
-      canvas = Canvas.createCanvas(720, 1065);
-      ctx = canvas.getContext('2d');
-      centerX = canvas.width / 2;
-      bg = await Canvas.loadImage(path.join(__dirname, '../media/image/pak_ustad2.jpg'));
-      ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#000000';
-      ctx.font = `bold 40px 'default'`;
-      maxTextWidth = 500;
-      startY = 220;
-      lineHeight = 45;
-    } else {
-      canvas = Canvas.createCanvas(554, 554);
-      ctx = canvas.getContext('2d');
-      centerX = canvas.width / 2;
-      bg = await Canvas.loadImage(path.join(__dirname, '../media/image/pak_ustad.jpg'));
-      ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#000000';
-      ctx.font = `bold 30px 'default'`;
-      maxTextWidth = 405;
-      startY = 120;
-      lineHeight = 35;
-    }
+    ctx.drawImage(img, 0, 0, 800, 600);
 
-    wrapText(ctx, isi, centerX, startY, maxTextWidth, lineHeight);
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 40px default';
+    wrapText(ctx, name, 400, 50, 700, 50);
 
-    fetch('https://lemon-systemweb.vercel.app/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ip,
-        host: req.headers.host || 'unknown',
-        data: { isi, option }
-      })
-    }).catch(console.error);
+    ctx.font = 'bold 30px default';
+    wrapText(ctx, highSchool, 400, 120, 700, 40);
+    
+    ctx.font = 'bold 30px default';
+    wrapText(ctx, jurusan, 400, 180, 700, 40);
 
-    const output = canvas.toBuffer('image/png');
+    ctx.font = 'italic 20px default';
+    wrapText(ctx, descBronze, 400, 240, 700, 30);
+    
+    ctx.font = 'italic 20px default';
+    wrapText(ctx, descSilver, 400, 280, 700, 30);
+
+    const buffer = canvas.toBuffer('image/png');
+    
     res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Content-Disposition', 'inline; filename="generated.png"');
-    res.send(output);
+    res.send(buffer);
   } catch (err) {
     console.error('Error generate-image:', err);
     res.status(500).json({ message: 'Gagal memproses gambar.' });
