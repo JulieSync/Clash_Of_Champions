@@ -43,7 +43,7 @@ function isGloballyRateLimited() {
   return false;
 }
 
-Canvas.registerFont(path.join(__dirname, '../media/fonts/Lemon.ttf'), { family: 'default' });
+Canvas.registerFont(path.join(__dirname, '..\media\fonts\Magistral Regular.otf'), { family: 'default' });
 
 function wrapText(ctx, text, centerX, startY, maxWidth, lineHeight) {
   const words = text.split(' ');
