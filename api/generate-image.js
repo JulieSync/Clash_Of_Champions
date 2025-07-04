@@ -43,7 +43,10 @@ function isGloballyRateLimited() {
   return false;
 }
 
-Canvas.registerFont(path.join(__dirname, '..\media\fonts\moby-reg.ttf'), { family: 'default' });
+Canvas.registerFont(path.join(__dirname, '..\media\fonts\moby-reg.ttf'), { family: 'nameFont' });
+Canvas.registerFont(path.join(__dirname, '..\media\fonts\magistral-medium.ttf'), { family: 'fakultasFont' });
+Canvas.registerFont(path.join(__dirname, '..\media\fonts\magistral-regular.ttf'), { family: 'jurusanFont' });
+Canvas.registerFont(path.join(__dirname, '..\media\fonts\xenois-soft-pro.otf'), { family: 'descFont' });
 
 function wrapText(ctx, text, centerX, startY, maxWidth, lineHeight) {
   const words = text.split(' ');
