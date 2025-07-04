@@ -44,7 +44,9 @@ function isGloballyRateLimited() {
 }
 
 Canvas.registerFont(path.join(__dirname, '..\media\fonts\moby-reg.ttf'), { family: 'nameFont' });
-Canvas.registerFont(path.join(__dirname, '..\media\fonts\moby-reg.ttf'), { family: 'fakultasFont' });
+Canvas.registerFont(path.join(__dirname, '..\media\fonts\magistral-medium.ttf'), { family: 'fakultasFont' });
+Canvas.registerFont(path.join(__dirname, '..\media\fonts\magistral-regular.ttf'), { family: 'jurusanFont' });
+
 
 function wrapText(ctx, text, centerX, startY, maxWidth, lineHeight) {
   const words = text.split(' ');
