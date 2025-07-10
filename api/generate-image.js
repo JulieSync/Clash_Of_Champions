@@ -151,19 +151,19 @@ module.exports = async (req, res) => {
     ctx.drawImage(img, 0, 0, 800, 600);
 
     ctx.fillStyle = '#000';
-    ctx.font = 'bold 40px default';
+    ctx.font = 'bold 40px nameFont';
     wrapText(ctx, name, 400, 50, 700, 50);
 
-    ctx.font = 'bold 30px default';
+    ctx.font = 'bold 30px fakultasFont';
     wrapText(ctx, highSchool, 400, 120, 700, 40);
     
-    ctx.font = 'bold 30px default';
+    ctx.font = 'bold 30px jurusanFont';
     wrapText(ctx, jurusan, 400, 180, 700, 40);
 
-    ctx.font = 'italic 20px default';
+    ctx.font = 'italic 20px descFont';
     wrapText(ctx, descBronze, 400, 240, 700, 30);
     
-    ctx.font = 'italic 20px default';
+    ctx.font = 'italic 20px descFont';
     wrapText(ctx, descSilver, 400, 280, 700, 30);
 
     const buffer = canvas.toBuffer('image/png');
